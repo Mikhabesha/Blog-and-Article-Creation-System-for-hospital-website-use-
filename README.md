@@ -37,7 +37,7 @@ Installation
 2. Clone the Repository
   bash
   
-  git clone https://github.com/your-username/article-comments-system.git
+  git clone [https://github.com/Mikhabesha/Blog-and-Article-Creation-System-for-hospital-website-use-.git]
 3. Setup the Database
   Import the comments.sql file into your database:
   sql
