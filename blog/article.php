@@ -1,14 +1,43 @@
+<?php include '../config.php'; ?> 
+
+<?php
+// Fetch single article safely using prepared statements
+$id = intval($_GET['id']);
+$stmt = $conn->prepare("SELECT * FROM articles WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$article = $result->fetch_assoc();
+$stmt->close();
+
+// Fetch all articles with author names
+$query = "
+    SELECT articles.*, users.name AS author 
+    FROM articles 
+    JOIN users ON articles.author_id = users.id 
+    ORDER BY articles.created_at DESC
+";
+$result = $conn->query($query);
+$allArticles = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $allArticles[] = $row;
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Portal For Mega Hospital</title>
+    <title>Article</title>
     <meta name="description" content="Mega Primary Hospital - Quality Healthcare Services for the Community">
     <meta property="og:title" content="Mega Primary Hospital">
     <meta property="og:description" content="Mega Primary Hospital - Quality Healthcare Services for the Community">
     <meta property="og:image" content="img/team3.jpg"> <!-- Optional: image for the preview -->
-    <meta property="og:url" content="https://megaprimaryhospital.netlify.app">
+    <meta property="og:url" content="https://megaprimaryhospital.com">
     <meta property="og:type" content="website">
 
     <!-- Twitter Card tags -->
@@ -20,9 +49,9 @@
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -33,14 +62,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -79,95 +108,100 @@
     </div>
     <!-- Topbar End -->
 
-
     <!-- Navbar Start -->
     <div class="container-fluid sticky-top bg-white shadow-sm mb-5">
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
                 <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>Mega primary Hospital</h1>
+                    <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>Mega Primary Hospital</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="blog/index_for_blog.php" class="nav-item nav-link">Blog</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Service</a>
+                        <a href="../index.html" class="nav-item nav-link">Home</a>  
+                        <a href="index_for_blog.php" class="nav-item nav-link active">Blog</a>
+                        <a href="../about.html" class="nav-item nav-link">About</a>
+                        <a href="../service.html" class="nav-item nav-link">Service</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                        <div class="nav-item dropdown">
+                            <a href="../#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0">
                                 <a href="team.html" class="dropdown-item">The Team</a>
                                 <a href="search.html" class="dropdown-item">Search</a>
                                 <a href="appointment.html" class="dropdown-item">Appointment</a>   
-                                <a href="testimonial.html" class="dropdown-item active">Brief Services</a>  
+                                <a href="testimonial.html" class="dropdown-item">Brief Services</a>  
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <a href="../contact.html" class="nav-item nav-link">Contact</a>
                     </div>
                 </div>
             </nav>
         </div>
     </div>
-    <!-- Navbar End -->
 
-
-    <!-- Testimonial Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">services</h5>
-                <h1 class="display-4">Here Is Lists of our services</h1>
+    <div class="container">
+        <div class="row">
+            <!-- Main Article -->
+            <div class="col-lg-8 article-container">
+                <h1><?= htmlspecialchars($article['title']); ?></h1>
+                <img src="../uploads/<?= htmlspecialchars($article['image_url'] ?? 'default.jpg'); ?>" 
+                     alt="<?= htmlspecialchars($article['title']); ?> image">
+                     <div class="article-meta">
+                    <span><i class="fas fa-user"></i> <?= htmlspecialchars($article['author_name']); ?></span>
+                    <span><i class="fas fa-calendar-alt"></i> <?= htmlspecialchars(date('F j, Y', strtotime($article['created_at']))); ?></span>
+                </div>
+                
+                <hr/>
+                <div class="article-content">
+                    <?= htmlspecialchars_decode($article['content']) ?>
+                </div>
+   
+                <hr>
+                <h3>Comments</h3>
+                <div class="comment-frm">
+                    <form method="post" action="comment.php">
+                        <input type="hidden" name="article_id" value="<?= $id; ?>">
+                        <textarea name="comment" required></textarea>
+                        <button type="submit" class="comment-frm-btn">Post Comment</button>
+                    </form>
+                </div>
+                <div class="comments">
+                    <?php
+                    $stmt = $conn->prepare("SELECT * FROM comments WHERE article_id = ? ORDER BY created_at DESC");
+                    $stmt->bind_param("i", $id);
+                    $stmt->execute();
+                    $comments = $stmt->get_result();
+                    while ($comment = $comments->fetch_assoc()) {
+                        echo "<p>" . htmlspecialchars($comment['content']) . " - <em>" . htmlspecialchars($comment['created_at']) . "</em></p>";
+                    }
+                    $stmt->close();
+                    ?>
+                </div>
             </div>
-            <div class="row justify-content-center">
-                 <h3><b>OPD Service</b>:</h3> 
-                     <p> The Outpatient Department (OPD) service offers comprehensive evaluations and treatments for patients with various health concerns, ensuring accessible and efficient healthcare. </p>  
 
-                 <h3><b>EOPD Service</b>:</h3> 
-                     <p>The Extended Outpatient Department (EOPD) service provides specialized care for chronic conditions, allowing patients to receive ongoing management and support tailored to their needs.</p> 
-                     
-                 <h3><b>Laboratory and Imaging Service</b>: </h3> 
-                     <p>Our state-of-the-art laboratory and imaging services deliver accurate diagnostics through advanced testing and imaging technologies, facilitating timely and effective treatment plans. </p>
-
-                 <h3><b>Surgical Service</b>: </h3> 
-                     <p>The surgical service at Oromia Mega Primary Hospital encompasses a wide range of procedures, performed by skilled surgeons to ensure optimal patient outcomes in both elective and emergency cases. </p>
-                
-                 <h3><b>Inpatient Service<b>:</h3> 
-                     <p> Our inpatient service provides comprehensive care for patients requiring hospitalization, with dedicated teams focused on recovery and rehabilitation in a comfortable environment. </p>
-                
-                  <h3><b>Pharmacy Service</b>:</h3> 
-                     <p>The pharmacy service ensures the safe and effective dispensing of medications, while also providing valuable consultation on drug interactions and patient education. </p>
-                
-                  <h3><b>Maternal and Child Health Service</b>:</h3>
-                     <p>Our maternal and child health service focuses on providing essential care for mothers and children, including prenatal, postnatal, and pediatric services to promote healthy families. </p>
-                
-                  <h3><b>ART and TB Service</b>:</h3> 
-                     <p>The Antiretroviral Therapy (ART) and Tuberculosis (TB) services offer critical support and treatment for patients living with HIV/AIDS and TB, aiming to improve their quality of life and health outcomes. </p>
-                
-                 <h3><b>NICU Service</b>:</h3> 
-                     <p>The Neonatal Intensive Care Unit (NICU) provides specialized care for premature and critically ill newborns, ensuring they receive the highest level of medical attention during their vulnerable early days.</p> 
-                
-                 <h3><b>Leishmaniasis Treatment Service</b>:</h3> 
-                     <p>Our Leishmaniasis treatment service offers targeted therapies and management for patients affected by this parasitic disease, aiming for effective recovery and health restoration.</p> 
-                
-                  <h3><b>Gender-Based Violence Service</b>:</h3> 
-                     <p> The gender-based violence service provides a safe and supportive environment for survivors, offering medical care, counseling, and legal support to facilitate healing and empowerment.</p> 
-                
-                  <h3><b>Psychiatry Service</b>:</h3> 
-                     <p>Our psychiatry service delivers mental health care through comprehensive assessments and personalized treatment plans, focusing on the emotional well-being of our patients.</p> 
-                
-                  <h3><b>EPI Service</b>:</h3> 
-                     <p>The Expanded Program on Immunization (EPI) service ensures that children receive vital vaccinations to prevent infectious diseases, contributing to community health and safety.</p>  
+            <!-- Latest Posts -->
+            <div class="col-lg-4">
+                <div class="latest-posts">
+                    <h4>Latest Posts</h4>
+                    <?php
+                    $latest_posts = $conn->query("SELECT id, title, image_url FROM articles ORDER BY created_at DESC LIMIT 3");
+                    while ($post = $latest_posts->fetch_assoc()) {
+                        echo "<div class='latest-post'>
+                                <img src='../uploads/" . htmlspecialchars($post['image_url']) . "' alt='" . htmlspecialchars($post['title']) . " thumbnail'>
+                                <a href='article.php?id=" . htmlspecialchars($post['id']) . "'>" . htmlspecialchars($post['title']) . "</a>
+                              </div>";
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Testimonial End -->
 
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light mt-5 py-5">
+       <!-- Footer Start -->
+<div class="container-fluid bg-dark text-light mt-5 py-5">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
@@ -232,6 +266,7 @@
     </div>
     <!-- Footer End -->
 
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
@@ -239,15 +274,163 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/waypoints/waypoints.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-</body>
+    <script src="../js/main.js"></script>
 
+</body>
 </html>
+<style>
+.comment-frm {
+        margin: 20px 0;
+    }
+    .comment-frm h3 {
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: #333;
+    }
+    .comment-frm {
+        display: inline-block;
+        margin: 5px 10px;
+        padding: 10px 20px;
+        text-decoration: none;
+        background-color: #adf1e1; /* Primary button color */
+        color: #fff; /* Button text color */
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.2s;
+        font-size: 16px;
+    }
+    .comment-frm-btn{
+        background-color: #41e9c1; /* Darker shade on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+    .comment-frm-btn:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+    .article-container {
+        text-align: center; /* Centers the text */
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .article-container h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }  
+    .article-container img {
+        width: 100%; /* Makes image responsive */
+        max-width: 600px; /* Sets a max size */
+        height: auto;
+        margin-bottom: 20px;
+    }
+    .article-container p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    .comment-frm textarea {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 10px;
+    }
+    .comment-frm-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+    .comments p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 5px;
+    }
+    .article-container img {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+    .latest-posts {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .latest-posts h4 {
+        margin-bottom: 15px;
+    }
+    .latest-post {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+    }
+    .latest-post img {
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+    .latest-post a {
+        text-decoration: none;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .latest-post a:hover {
+        color: #007bff;
+    }
+    .comment-frm textarea {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }       
+
+    .comment-frm-btn {
+        background-color: #41e9c1;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .comment-frm-btn:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .latest-post {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+    }
+
+    .latest-post img {
+        width: 60px;
+        height: 60px;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+    .latest-post a {
+        text-decoration: none;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .latest-post a:hover {
+        color: #007bff;
+    }
+
+</style>

@@ -1,14 +1,17 @@
+<?php include '../config.php'; ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Portal For Mega Hospital</title>
+    <title>Mega Primary Hospital</title>
     <meta name="description" content="Mega Primary Hospital - Quality Healthcare Services for the Community">
     <meta property="og:title" content="Mega Primary Hospital">
     <meta property="og:description" content="Mega Primary Hospital - Quality Healthcare Services for the Community">
     <meta property="og:image" content="img/team3.jpg"> <!-- Optional: image for the preview -->
-    <meta property="og:url" content="https://megaprimaryhospital.netlify.app">
+    <meta property="og:url" content="https://megaprimaryhospital.com">
     <meta property="og:type" content="website">
 
     <!-- Twitter Card tags -->
@@ -20,9 +23,9 @@
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -33,14 +36,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -85,89 +88,75 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
                 <a href="index.html" class="navbar-brand">
-                    <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>Mega primary Hospital</h1>
+                    <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-clinic-medical me-2"></i>Mega Primary Hospital</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="blog/index_for_blog.php" class="nav-item nav-link">Blog</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Service</a>
+                        <a href="../index.html" class="nav-item nav-link">Home</a>  
+                        <a href="index_for_blog.php" class="nav-item nav-link active">Blog</a>
+                        <a href="../about.html" class="nav-item nav-link">About</a>
+                        <a href="../service.html" class="nav-item nav-link">Service</a>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                        <div class="nav-item dropdown">
+                            <a href="../#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0">
                                 <a href="team.html" class="dropdown-item">The Team</a>
                                 <a href="search.html" class="dropdown-item">Search</a>
                                 <a href="appointment.html" class="dropdown-item">Appointment</a>   
-                                <a href="testimonial.html" class="dropdown-item active">Brief Services</a>  
+                                <a href="testimonial.html" class="dropdown-item">Brief Services</a>  
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <a href="../contact.html" class="nav-item nav-link">Contact</a>
                     </div>
                 </div>
             </nav>
         </div>
     </div>
-    <!-- Navbar End -->
-
-
-    <!-- Testimonial Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5" style="max-width: 500px;">
-                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">services</h5>
-                <h1 class="display-4">Here Is Lists of our services</h1>
-            </div>
-            <div class="row justify-content-center">
-                 <h3><b>OPD Service</b>:</h3> 
-                     <p> The Outpatient Department (OPD) service offers comprehensive evaluations and treatments for patients with various health concerns, ensuring accessible and efficient healthcare. </p>  
-
-                 <h3><b>EOPD Service</b>:</h3> 
-                     <p>The Extended Outpatient Department (EOPD) service provides specialized care for chronic conditions, allowing patients to receive ongoing management and support tailored to their needs.</p> 
-                     
-                 <h3><b>Laboratory and Imaging Service</b>: </h3> 
-                     <p>Our state-of-the-art laboratory and imaging services deliver accurate diagnostics through advanced testing and imaging technologies, facilitating timely and effective treatment plans. </p>
-
-                 <h3><b>Surgical Service</b>: </h3> 
-                     <p>The surgical service at Oromia Mega Primary Hospital encompasses a wide range of procedures, performed by skilled surgeons to ensure optimal patient outcomes in both elective and emergency cases. </p>
-                
-                 <h3><b>Inpatient Service<b>:</h3> 
-                     <p> Our inpatient service provides comprehensive care for patients requiring hospitalization, with dedicated teams focused on recovery and rehabilitation in a comfortable environment. </p>
-                
-                  <h3><b>Pharmacy Service</b>:</h3> 
-                     <p>The pharmacy service ensures the safe and effective dispensing of medications, while also providing valuable consultation on drug interactions and patient education. </p>
-                
-                  <h3><b>Maternal and Child Health Service</b>:</h3>
-                     <p>Our maternal and child health service focuses on providing essential care for mothers and children, including prenatal, postnatal, and pediatric services to promote healthy families. </p>
-                
-                  <h3><b>ART and TB Service</b>:</h3> 
-                     <p>The Antiretroviral Therapy (ART) and Tuberculosis (TB) services offer critical support and treatment for patients living with HIV/AIDS and TB, aiming to improve their quality of life and health outcomes. </p>
-                
-                 <h3><b>NICU Service</b>:</h3> 
-                     <p>The Neonatal Intensive Care Unit (NICU) provides specialized care for premature and critically ill newborns, ensuring they receive the highest level of medical attention during their vulnerable early days.</p> 
-                
-                 <h3><b>Leishmaniasis Treatment Service</b>:</h3> 
-                     <p>Our Leishmaniasis treatment service offers targeted therapies and management for patients affected by this parasitic disease, aiming for effective recovery and health restoration.</p> 
-                
-                  <h3><b>Gender-Based Violence Service</b>:</h3> 
-                     <p> The gender-based violence service provides a safe and supportive environment for survivors, offering medical care, counseling, and legal support to facilitate healing and empowerment.</p> 
-                
-                  <h3><b>Psychiatry Service</b>:</h3> 
-                     <p>Our psychiatry service delivers mental health care through comprehensive assessments and personalized treatment plans, focusing on the emotional well-being of our patients.</p> 
-                
-                  <h3><b>EPI Service</b>:</h3> 
-                     <p>The Expanded Program on Immunization (EPI) service ensures that children receive vital vaccinations to prevent infectious diseases, contributing to community health and safety.</p>  
-            </div>
+<body>
+    <div class="container">
+        <h1>Our Latest Medical Blog Posts</h1>
+        <div class="categories">
+            <h3>Categories</h3>
+            <?php
+            $result = $conn->query("SELECT * FROM categories");
+            while ($row = $result->fetch_assoc()) {
+                echo "<a href='index_for_blog.php?category=" . $row['id'] . "' class='category-btn'>" . $row['name'] . "</a>";
+            }
+            ?>
         </div>
+        <h3 class="articles-h3">Latest Articles</h3><br/>
+        <div class="articles">
+            <!-- <h3 class="articles-h3">Latest Articles</h3><br/> -->
+            <?php
+            $category = isset($_GET['category']) ? intval($_GET['category']) : null;
+            $query = "SELECT * FROM articles" . ($category ? " WHERE category_id = $category" : "") . " ORDER BY created_at DESC";
+            $result = $conn->query($query);
+            while ($row = $result->fetch_assoc()) {
+                echo "<div class='article'>";
+                
+                // Check if the article has an image
+                if (!empty($row['image_url'])) {
+                    echo "<img src='" . $row['image_url'] . "' alt='Article Image'>";
+                } else {
+                    echo "<img src='default_image.jpg' alt='Default Article Image'>"; // Use a placeholder if no image
+                }
+                
+                echo "<h4><a href='article.php?id=" . $row['id'] . "'>" . $row['title'] . "</a></h4>
+                    <p>" . substr($row['content'], 0, 100) . "...</p>
+                    </div>";
+            }
+            ?>
+</div>
+
+
+
     </div>
-    <!-- Testimonial End -->
-
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light mt-5 py-5">
+       <!-- Footer Start -->
+       <div class="container-fluid bg-dark text-light mt-5 py-5">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
@@ -232,6 +221,7 @@
     </div>
     <!-- Footer End -->
 
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
@@ -239,15 +229,104 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="../lib/easing/easing.min.js"></script>
+    <script src="../lib/waypoints/waypoints.min.js"></script>
+    <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
-
 </html>
+<style>
+    .categories {
+        margin: 20px 0;
+    }
+    .categories h3 {
+        margin-bottom: 15px;
+        font-size: 24px;
+        color: #333;
+    }
+    .category-btn {
+        display: inline-block;
+        margin: 3px 8px;
+        padding: 8px 15px;
+        text-decoration: none;
+        background-color: #007BFF; /* Primary button color */
+        color: #fff; /* Button text color */
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.2s;
+        font-size: 12px;
+    }
+    .category-btn:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+
+    .articles {
+    display: flex;
+    flex-wrap: wrap; /* Wrap articles to the next line */
+    gap: 20px; /* Space between articles */
+    justify-content: center; /* Center the articles */
+}
+
+.article {
+    width: 300px; /* Set a fixed width for articles */
+    border: 2px solid #ddd; /* Light border around the article */
+    border-radius: 10px;
+    overflow: hidden;
+    /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    background-color: #f1f8f7;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.article:hover {
+    transform: translateY(-10px); /* Slight lift on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.article img {
+    width: 100%; /* Full width image */
+    height: 180px; /* Fixed height */
+    object-fit: cover; /* Crop image if needed */
+}
+
+.article h4 {
+    font-size: 20px;
+    margin: 10px;
+    color: #007BFF;
+}
+
+.article h4 a {
+    text-decoration: none;
+    color: inherit; /* Inherit color for the link */
+}
+
+.article h4 a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.article p {
+    margin: 10px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.article h3 {
+    font-size: 20px;
+    margin: 10px;
+    color: #007BFF;
+}
+
+.article h3 a {
+    text-decoration: none;
+    color: inherit; /* Inherit color for the link */
+}
+
+.article h3 a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+</style>
